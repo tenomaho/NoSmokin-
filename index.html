@@ -226,17 +226,15 @@
 
                 if (x < 0) x = 0;
                 if (y < 0) y = 0;
-                if (x > canvas.width - 100) x = canvas.width - 100;
-                if (y > canvas.height - 50) y = canvas.height - 50;
+                if (x > window.innerWidth * 3) x = window.innerWidth * 3;
+                if (y > window.innerHeight) y = window.innerHeight;
 
                 div.style.left = `${x}px`;
                 div.style.top = `${y}px`;
             }, 100);
         }
 
-        for (let i = 0; i < 40; i++) {
-            createAsciiArt();
-        }
+        createAsciiArt();  // ASCII 아트 생성
     </script>
 </body>
 </html>
