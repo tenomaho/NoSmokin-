@@ -1,5 +1,4 @@
-
-          <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -56,8 +55,6 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 300vw;
-            height: 100vh;
             pointer-events: auto;
         }
 
@@ -87,6 +84,8 @@
     <script>
         const canvas = document.getElementById('drawing-board');
         const ctx = canvas.getContext('2d');
+
+        // 캔버스 크기 설정
         canvas.width = window.innerWidth * 3;
         canvas.height = window.innerHeight;
 
@@ -124,8 +123,8 @@
         canvas.addEventListener('mouseout', stopDrawing);
 
         // 터치 이벤트 추가 (모바일에서 사용)
-        canvas.addEventListener('touchstart', startDrawingTouch);
-        canvas.addEventListener('touchmove', drawTouch);
+        canvas.addEventListener('touchstart', startDrawingTouch, { passive: false });
+        canvas.addEventListener('touchmove', drawTouch, { passive: false });
         canvas.addEventListener('touchend', stopDrawingTouch);
         canvas.addEventListener('touchcancel', stopDrawingTouch);
 
@@ -152,6 +151,7 @@
 
         // 터치 이벤트 함수들
         function startDrawingTouch(e) {
+            e.preventDefault();  // 기본 터치 이벤트를 방지
             isDrawing = true;
             const touch = e.touches[0];
             lastX = touch.clientX;
@@ -159,6 +159,7 @@
         }
 
         function drawTouch(e) {
+            e.preventDefault();  // 기본 터치 이벤트를 방지
             if (!isDrawing) return;
 
             const touch = e.touches[0];
@@ -224,16 +225,5 @@
                 if (x < 0) x = 0;
                 if (y < 0) y = 0;
                 if (x > canvas.width - 100) x = canvas.width - 100;
-                if (y > canvas.height - 50) y = canvas.height - 50;
+                if (y > canvas.height - 50) y
 
-                div.style.left = `${x}px`;
-                div.style.top = `${y}px`;
-            }, 100);
-        }
-
-        for (let i = 0; i < 40; i++) {
-            createAsciiArt();
-        }
-    </script>
-</body>
-</html>
