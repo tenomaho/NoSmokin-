@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+          <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -10,15 +11,15 @@
             padding: 0;
             font-family: monospace;
             overflow-x: auto;
-            overflow-y: hidden;
+            overflow-y: hidden; /* 세로 스크롤 방지 */
         }
 
         #container {
-            width: 300vw;
+            width: 300vw; /* 가로 스크롤 영역 */
             height: 100vh;
             position: relative;
             background: url('https://i.ibb.co/gVsfdhj/Kakao-Talk-20241202-234303321.jpg') no-repeat center center;
-            background-size: auto 150vh;
+            background-size: auto 150vh; /* 세로 화면 꽉 채우기 */
         }
 
         h1 {
@@ -116,10 +117,17 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         });
 
+        // 마우스 이벤트
         canvas.addEventListener('mousedown', startDrawing);
         canvas.addEventListener('mousemove', draw);
         canvas.addEventListener('mouseup', stopDrawing);
         canvas.addEventListener('mouseout', stopDrawing);
+
+        // 터치 이벤트 추가 (모바일에서 사용)
+        canvas.addEventListener('touchstart', startDrawingTouch);
+        canvas.addEventListener('touchmove', drawTouch);
+        canvas.addEventListener('touchend', stopDrawingTouch);
+        canvas.addEventListener('touchcancel', stopDrawingTouch);
 
         function startDrawing(e) {
             isDrawing = true;
@@ -139,6 +147,32 @@
         }
 
         function stopDrawing() {
+            isDrawing = false;
+        }
+
+        // 터치 이벤트 함수들
+        function startDrawingTouch(e) {
+            isDrawing = true;
+            const touch = e.touches[0];
+            lastX = touch.clientX;
+            lastY = touch.clientY;
+        }
+
+        function drawTouch(e) {
+            if (!isDrawing) return;
+
+            const touch = e.touches[0];
+            const x = touch.clientX - brushSize / 2;
+            const y = touch.clientY - brushSize / 2;
+
+            ctx.globalAlpha = 1;
+            ctx.drawImage(brushCacheCanvas, x, y, brushSize, brushSize);
+
+            lastX = touch.clientX;
+            lastY = touch.clientY;
+        }
+
+        function stopDrawingTouch() {
             isDrawing = false;
         }
 
