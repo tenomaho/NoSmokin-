@@ -9,8 +9,10 @@
             margin: 0;
             padding: 0;
             font-family: monospace;
-            overflow-x: auto;
+            overflow-x: hidden; /* 가로 스크롤 방지 */
             overflow-y: hidden; /* 세로 스크롤 방지 */
+            height: 100vh;
+            width: 100%;
         }
 
         #container {
@@ -85,7 +87,7 @@
         const canvas = document.getElementById('drawing-board');
         const ctx = canvas.getContext('2d');
 
-        // 캔버스 크기 설정
+        // 화면 크기에 맞게 캔버스 크기 조정
         canvas.width = window.innerWidth * 3;
         canvas.height = window.innerHeight;
 
@@ -122,7 +124,7 @@
         canvas.addEventListener('mouseup', stopDrawing);
         canvas.addEventListener('mouseout', stopDrawing);
 
-        // 터치 이벤트 추가 (모바일에서 사용)
+        // 터치 이벤트 (모바일)
         canvas.addEventListener('touchstart', startDrawingTouch, { passive: false });
         canvas.addEventListener('touchmove', drawTouch, { passive: false });
         canvas.addEventListener('touchend', stopDrawingTouch);
@@ -225,5 +227,16 @@
                 if (x < 0) x = 0;
                 if (y < 0) y = 0;
                 if (x > canvas.width - 100) x = canvas.width - 100;
-                if (y > canvas.height - 50) y
+                if (y > canvas.height - 50) y = canvas.height - 50;
 
+                div.style.left = `${x}px`;
+                div.style.top = `${y}px`;
+            }, 100);
+        }
+
+        for (let i = 0; i < 40; i++) {
+            createAsciiArt();
+        }
+    </script>
+</body>
+</html>
