@@ -237,6 +237,13 @@
         }
 
         createAsciiArt();  // ASCII 아트 생성
+         function saveCanvasAsImage() {
+            // 캔버스를 이미지 데이터 URL로 변환
+            const image = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.href = image;
+            link.download = 'canvas_screenshot.png';
+            link.click();
     </script>
 </body>
 </html>
